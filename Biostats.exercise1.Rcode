@@ -1,0 +1,85 @@
+#Exercise 1 Biostatistics
+rm = list(ls)
+#Question 1:
+> planet <- c('Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune') #making a list of planet names
+> circumference.miles <- c(9525,23628,24900,13264,279118,235299,99786,96692) # making list of circumference in miles
+> circumference.km <- circumference.miles/0.621 # converting circumference to km
+> pi <- 3.14159
+> 2pi <- pi*2 # storing 2pi as a variable for when I calculate diameter
+Error: unexpected symbol in "2pi"
+> twopi <- pi*2
+> diameter <- (circumference.km/twopi)*2
+> Planet.data <- data.frame(planet,circumference.km,diameter, stringsAsFactors = FALSE)
+> Planet.data
+planet circumference.km   diameter
+1 Mercury         15338.16   4882.293
+2   Venus         38048.31  12111.163
+3   Earth         40096.62  12763.161
+4    Mars         21359.10   6798.818
+5 Jupiter        449465.38 143069.394
+6  Saturn        378903.38 120608.794
+7  Uranus        160685.99  51147.982
+8 Neptune        155703.70  49562.070
+
+#Question 2: In 3 different ways, create and print a matrix named "B" that contains 7 columns and 5 rows with all the
+# elements containing the value 7
+# Approach 1
+B <- matrix(7, nrow = 5, ncol = 7)
+> B
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+[1,]    7    7    7    7    7    7    7
+[2,]    7    7    7    7    7    7    7
+[3,]    7    7    7    7    7    7    7
+[4,]    7    7    7    7    7    7    7
+[5,]    7    7    7    7    7    7    7
+
+#Approach 2: make an array?
+> B = array(rep(7), dim = c(5,7)) # telling R to repeat 7 as the value to fill all elements, with dimensions 5 rows and 7 columns
+> B
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+[1,]    7    7    7    7    7    7    7
+[2,]    7    7    7    7    7    7    7
+[3,]    7    7    7    7    7    7    7
+[4,]    7    7    7    7    7    7    7
+[5,]    7    7    7    7    7    7    7
+
+
+#Question 3: Data table into excel and save as variable M.
+sorted <- M[order(M$V1),]
+> sorted
+    V1   V2
+1 1998 10.0
+2 1999 12.5
+3 2000 15.6
+4 2001 19.5
+5 2002 24.4
+6 2003   NA
+7 2004 36.2
+8 2005 27.7
+> sorted <- M[order(M$V1),]
+> ?order
+> sorted <- M([order(M$V1),], decreasing = TRUE)
+Error: unexpected '[' in "sorted <- M(["
+> sorted <- M(order[M$V1], decreasing = TRUE)
+Error: could not find function "M"
+> sorted <- order(M$V1, decreasing = TRUE)
+> sorted
+[1] 8 7 6 5 4 3 2 1
+> sorted <- order(M[,1], decreasing = TRUE)
+> sorted
+[1] 8 7 6 5 4 3 2 1
+> sorted <- order(M$V1, decreasing = TRUE)
+> sorted
+[1] 8 7 6 5 4 3 2 1
+
+#This worked!
+> M[order(-M$V1),] # needed to use -M$V1 because the - indicates descending order of years
+    V1   V2
+8 2005 27.7
+7 2004 36.2
+6 2003   NA
+5 2002 24.4
+4 2001 19.5
+3 2000 15.6
+2 1999 12.5
+1 1998 10.0
