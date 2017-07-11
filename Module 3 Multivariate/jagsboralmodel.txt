@@ -1,0 +1,24 @@
+model {
+
+	 ## Data Level ## 
+	 for(i in 1:n) {
+
+		 for(j in 1:p) { eta[i,j] <- inprod(all.params[j,2:(num.lv+1)],lvs[i,]) }
+		 for(j in 1:p) { y[i,j] ~ dgamma(exp(all.params[j,1] + eta[i,j])*all.params[j,num.lv+2], all.params[j,num.lv+2]) } 
+
+	 } 
+
+	 ## Latent variables ## 
+	 for(i in 1:n) { for(k in 1:num.lv) { lvs[i,k] ~ dnorm(0,1) } } 
+
+
+	 ## Process Level ##
+	 for(j in 1:p) { all.params[j,1] ~ dnorm(0,0.01) } ## Separate species intercepts
+
+	 for(i in 1:(num.lv-1)) { for(j in (i+2):(num.lv+1)) { all.params[i,j] <- 0 } } ## Constraints to 0 on upper diagonal
+	 for(i in 1:num.lv) { all.params[i,i+1] ~ dunif(0,20) } ## Sign constraints on diagonal elements
+	 for(i in 2:num.lv) { for(j in 2:i) { all.params[i,j] ~ dnorm(0,0.05) } } ## Free lower diagonals
+	 for(i in (num.lv+1):p) { for(j in 2:(num.lv+1)) { all.params[i,j] ~ dnorm(0,0.05) } } ## All other elements
+	 for(j in 1:p) { all.params[j,num.lv+2] ~ dunif(0,50) } ## Dispersion parameters
+
+	 }
